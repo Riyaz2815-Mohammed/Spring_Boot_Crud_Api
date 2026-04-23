@@ -1,23 +1,45 @@
 package com.justdemo.demo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.justdemo.demo.model.User;
+import com.justdemo.demo.service.Userservice;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/users")
 public class Controllermain {
 
-    @GetMapping("/all")
-    public String display(){
-        return "All Users";
+    @Autowired
+    private Userservice service;
+
+    @PostMapping
+    public User addUser(@RequestBody User user) {
+        return service.add_user(user);
+
     }
 
-    @PostMapping("/add")
-    public  String getuser(){
-        return "Added";
+    @GetMapping
+    public List<User> display(){
+        return service.display();
     }
 
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id){
+         service.delete(id);
+         return  id  +"Deleted Successful";
 
+    }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        return service.updateUser(id, user);
+    }
+
+    @GetMapping("/{id}")
+    public User getbyid(@PathVariable Long id){
+        return service.getsingle(id);
+
+    }
 }
