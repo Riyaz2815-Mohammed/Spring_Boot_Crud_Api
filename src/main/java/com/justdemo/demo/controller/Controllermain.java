@@ -15,8 +15,8 @@ public class Controllermain {
     private Userservice service;
 
     @PostMapping
-    public User addUser(@RequestBody User user) {
-        return service.add_user(user);
+        public User addUser(@RequestBody User user) {
+            return service.add_user(user);
 
     }
 
@@ -28,7 +28,7 @@ public class Controllermain {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id){
          service.delete(id);
-         return  id  +"Deleted Successful";
+         return  id  + "Deleted Successful";
 
     }
 
@@ -42,4 +42,14 @@ public class Controllermain {
         return service.getsingle(id);
 
     }
+    @PatchMapping("/{id}")
+    public User patchupdate(@PathVariable Long id,@RequestBody User user){
+        return service.patchuser(id,user);
+    }
+
+    @GetMapping("/ilr")
+    public User print(){
+        return  service.print();
+    }
+
 }
